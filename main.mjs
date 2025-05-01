@@ -16,7 +16,10 @@ import { fb_initialise }
     from './fb_io.mjs';
     window.fb_initialise   = fb_initialise;
 
-   
+    import { getAuth, GoogleAuthProvider, signInWithPopup }
+
+    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
 /**************************************************************/
 // index.html main code
 /**************************************************************/
