@@ -24,6 +24,10 @@ import { fb_initialise }
     from './fb_io.mjs';
     window.fb_detectloginchange   = fb_detectloginchange;
 
+    import { fb_logout }
+    from './fb_io.mjs';
+    window.fb_logout   = fb_logout;
+
 /**************************************************************/
 // index.html main code
 /**************************************************************/

@@ -26,6 +26,10 @@ import { getDatabase }
   import { onAuthStateChanged }
 
 from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+import { signOut }
+
+from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 /**************************************************************/
 // EXPORT FUNCTIONS
 // List all the functions called by code or html outside of this module
@@ -37,7 +41,8 @@ from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 export {
   fb_initialise,
   fb_authenticate,
-  fb_detectloginchange
+  fb_detectloginchange,
+  fb_logout
 };
 /******************************************************/
 // fb_login()
@@ -122,6 +127,25 @@ PROVIDER.setCustomParameters({
     
     document.getElementById("p_fbdetectloginchange").innerHTML= "Login change detected"
     };
+
+    function fb_logout() {
+      console.log('%c fb_logout(): ',
+        'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+        const AUTH = getAuth();
+      
+        signOut(AUTH).then(() => {
+
+          //✅ Code for a successful logout goes here
+  console.log("successful logout")
+      })
+  
+      .catch((error) => {
+  
+          //❌ Code for a logout error goes here
+          console.log("logout error")
+      });
+      document.getElementById("p_fblogout").innerHTML= "logout"
+    }
   
 /**************************************************************/
 // END OF CODE
