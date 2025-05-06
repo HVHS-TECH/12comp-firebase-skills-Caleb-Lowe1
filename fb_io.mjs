@@ -30,6 +30,10 @@ from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { signOut }
 
 from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+import { ref, set }
+
+    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 /**************************************************************/
 // EXPORT FUNCTIONS
 // List all the functions called by code or html outside of this module
@@ -42,7 +46,8 @@ export {
   fb_initialise,
   fb_authenticate,
   fb_detectloginchange,
-  fb_logout
+  fb_logout,
+  fb_WriteRec
 };
 /******************************************************/
 // fb_login()
@@ -145,6 +150,26 @@ PROVIDER.setCustomParameters({
           console.log("logout error")
       });
       document.getElementById("p_fblogout").innerHTML= "logout"
+    };
+
+
+    //function fb_WriteRec incomplete
+    function fb_WriteRec() {
+      console.log('%c fb_loginchangedetected(): ',
+        'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+
+        const ref = ref(what-DB, where-to-write-to);
+
+        set(ref, data-to-write).then(() => {
+    
+            //✅ Code for a successful write goes here
+    console.log("successful write")
+        }).catch((error) => {
+    
+            //❌ Code for a write error goes here
+    console.log("Writing error")
+        });
+          document.getElementById("p_fbWriteRec").innerHTML= "Record written"
     }
   
 /**************************************************************/
