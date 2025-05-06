@@ -36,7 +36,8 @@ from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
 export {
   fb_initialise,
-  fb_authenticate
+  fb_authenticate,
+  fb_detectloginchange
 };
 /******************************************************/
 // fb_login()
@@ -69,23 +70,7 @@ function fb_authenticate() {console.log('%c fb_authenticate(): ',
   'color: ' + COL_C + '; background-color: ' + COL_B + ';');
   const AUTH = getAuth();
 
-  onAuthStateChanged(AUTH, (user) => {
-
-      if (user) {
-
-          //✅ Code for user logged in goes here
-
-      } else {
-
-          //✅ Code for user logged out goes here
-
-      }
-
-  }, (error) => {
-
-      //❌ Code for an onAuthStateChanged error goes here
-
-  });
+  
 
 
 
@@ -102,17 +87,42 @@ PROVIDER.setCustomParameters({
     signInWithPopup(AUTH, PROVIDER).then((result) => {
 
         //✅ Code for a successful authentication goes here
-        console.log("successfully signed in")
+        console.log("successful authentication")
         
     })
 
     .catch((error) => {
 
         //❌ Code for an authentication error goes here
-        console.log("successfully signed in")
+        console.log("authentication error")
     });
     document.getElementById("p_fbAuthenticate").innerHTML= "Authentication success"};
 
+    function fb_detectloginchange() {
+      console.log('%c fb_loginchangedetected(): ',
+        'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+        const AUTH = getAuth();
+      onAuthStateChanged(AUTH, (user) => {
+
+        if (user) {
+  
+            //✅ Code for user logged in goes here
+          console.log("user login successful")
+        } else {
+  
+            //✅ Code for user logged out goes here
+            console.log("user log out successful")
+        }
+  
+    }, (error) => {
+  
+        //❌ Code for an onAuthStateChanged error goes here
+        console.log("onAuthStateChanged error")
+    });
+    
+    document.getElementById("p_fbdetectloginchange").innerHTML= "Login change detected"
+    };
+  
 /**************************************************************/
 // END OF CODE
 /**************************************************************/
