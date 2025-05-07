@@ -158,9 +158,9 @@ PROVIDER.setCustomParameters({
       console.log('%c fb_loginchangedetected(): ',
         'color: ' + COL_C + '; background-color: ' + COL_B + ';');
 
-        const ref = ref(what-DB, where-to-write-to);
+        const dbReference = ref(firebaseGameDB, Test/data);
 
-        set(ref, data-to-write).then(() => {
+        set(dbReference, {hello: 'hi'}).then(() => {
     
             //✅ Code for a successful write goes here
     console.log("successful write")
