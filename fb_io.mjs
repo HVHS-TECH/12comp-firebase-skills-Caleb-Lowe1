@@ -34,6 +34,10 @@ from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { ref, set }
 
     from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+    import { get }
+
+    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 /**************************************************************/
 // EXPORT FUNCTIONS
 // List all the functions called by code or html outside of this module
@@ -47,7 +51,8 @@ export {
   fb_authenticate,
   fb_detectloginchange,
   fb_logout,
-  fb_WriteRec
+  fb_WriteRec,
+  fb_ReadRec
 };
 /******************************************************/
 // fb_login()
@@ -157,8 +162,8 @@ PROVIDER.setCustomParameters({
     function fb_WriteRec() {
       console.log('%c fb_loginchangedetected(): ',
         'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-
-        const dbReference = ref(firebaseGameDB, Test/data);
+        const DB = getDatabase()
+        const dbReference = ref(DB, "Test/data");
 
         set(dbReference, {hello: 'hi'}).then(() => {
     
@@ -171,6 +176,32 @@ PROVIDER.setCustomParameters({
         });
           document.getElementById("p_fbWriteRec").innerHTML= "Record written"
     }
+
+     function fb_ReadRec() {
+      const DB = getDatabase()
+      const dbReference= ref(DB, "Test/Data/hello");
+
+    get(dbReference).then((snapshot) => {
+
+        var fb_data = snapshot.val();
+
+        if (fb_data != null) {
+
+            //✅ Code for a successful read goes here
+console.log("successful read")
+        } else {
+
+            //✅ Code for no record found goes here
+console.log("no record found")
+        }
+
+    }).catch((error) => {
+
+        //❌ Code for a read error goes here
+console.log("read error")
+    });
+  document.getElementById("p_fbReadRec").innerHTML= "Record Read"
+  }
   
 /**************************************************************/
 // END OF CODE

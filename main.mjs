@@ -32,6 +32,11 @@ import { fb_initialise }
     from './fb_io.mjs';
     window.fb_WriteRec   = fb_WriteRec;
 
+
+     import { fb_ReadRec }
+    from './fb_io.mjs';
+    window.fb_ReadRec   = fb_ReadRec;
+
 /**************************************************************/
 // index.html main code
 /**************************************************************/
