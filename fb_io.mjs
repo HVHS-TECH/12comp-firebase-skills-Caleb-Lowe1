@@ -39,6 +39,10 @@ import { ref, set }
 
     from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
+    import { update }
+
+    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
 /**************************************************************/
 // EXPORT FUNCTIONS
 // List all the functions called by code or html outside of this module
@@ -54,7 +58,8 @@ export {
   fb_logout,
   fb_WriteRec,
   fb_ReadRec,
-  fb_ReadAll
+  fb_ReadAll,
+  fb_UpdateRec
 };
 /******************************************************/
 // fb_login()
@@ -162,12 +167,12 @@ PROVIDER.setCustomParameters({
 
     //function fb_WriteRec incomplete
     function fb_WriteRec() {
-      console.log('%c fb_loginchangedetected(): ',
+      console.log('%c fb_WriteRec(): ',
         'color: ' + COL_C + '; background-color: ' + COL_B + ';');
         const DB = getDatabase()
         const dbReference = ref(DB, "Test/data");
 
-        set(dbReference, {hello: 'hi'}).then(() => {
+        set(dbReference, {hello: 'hi', test: 'testing'}).then(() => {
     
             //✅ Code for a successful write goes here
     console.log("successful write")
@@ -180,6 +185,8 @@ PROVIDER.setCustomParameters({
     }
 
      function fb_ReadRec() {
+      console.log('%c fb_ReadRec(): ',
+        'color: ' + COL_C + '; background-color: ' + COL_B + ';');
       const DB = getDatabase()
       const dbReference= ref(DB, "Test/data/hello");
 
@@ -191,6 +198,7 @@ PROVIDER.setCustomParameters({
 
             //✅ Code for a successful read goes here
 console.log("successful read")
+console.log(fb_data)
         } else {
 
             //✅ Code for no record found goes here
@@ -207,8 +215,10 @@ console.log(error)
   }
 
   function fb_ReadAll() {
+    console.log('%c fb_ReadAll(): ',
+        'color: ' + COL_C + '; background-color: ' + COL_B + ';');
          const DB = getDatabase()
-      const dbReference= ref(DB, "Test/data/hello");
+      const dbReference= ref(DB, "Test/data/");
     
 
     get(dbReference).then((snapshot) => {
@@ -232,6 +242,24 @@ console.log(error)
             console.log("error")
     });
    document.getElementById("p_fbReadAll").innerHTML= "Read all"
+  }
+
+  function fb_UpdateRec() { 
+    console.log('%c fb_UpdateRec(): ',
+        'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+    const DB = getDatabase()
+    const dbReference= ref(DB, "Test/data");
+
+    update(dbReference, {hello: "hello", test: "test"}).then(() => {
+
+        //✅ Code for a successful update goes here
+        console.log("successful update")
+    }).catch((error) => {
+
+        //❌ Code for a update error goes here
+        console.log("failed update")
+    });
+    document.getElementById("p_fbUpdateRec").innerHTML= "Updated record"
   }
   
 /**************************************************************/

@@ -41,6 +41,10 @@ import { fb_initialise }
     from './fb_io.mjs';
     window.fb_ReadAll   = fb_ReadAll;
 
+
+    import { fb_UpdateRec }
+    from './fb_io.mjs';
+    window.fb_UpdateRec   = fb_UpdateRec;
 /**************************************************************/
 // index.html main code
 /**************************************************************/
