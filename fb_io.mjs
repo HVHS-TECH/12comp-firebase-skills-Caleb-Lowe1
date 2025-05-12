@@ -219,6 +219,7 @@ console.log(error)
 
             //✅ Code for a successful read all goes here
           console.log("successfully read all")
+          console.log(fb_data)
         } else {
 
             //✅ Code for no record found goes here
@@ -230,7 +231,7 @@ console.log(error)
         //❌ Code for a read all error goes here
             console.log("error")
     });
-  
+   document.getElementById("p_fbReadAll").innerHTML= "Read all"
   }
   
 /**************************************************************/
