@@ -38,6 +38,7 @@ import { ref, set }
     import { get }
 
     from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
 /**************************************************************/
 // EXPORT FUNCTIONS
 // List all the functions called by code or html outside of this module
@@ -52,7 +53,8 @@ export {
   fb_detectloginchange,
   fb_logout,
   fb_WriteRec,
-  fb_ReadRec
+  fb_ReadRec,
+  fb_ReadAll
 };
 /******************************************************/
 // fb_login()
@@ -179,7 +181,7 @@ PROVIDER.setCustomParameters({
 
      function fb_ReadRec() {
       const DB = getDatabase()
-      const dbReference= ref(DB, "Test/Data/hello");
+      const dbReference= ref(DB, "Test/data/hello");
 
     get(dbReference).then((snapshot) => {
 
@@ -199,8 +201,36 @@ console.log("no record found")
 
         //❌ Code for a read error goes here
 console.log("read error")
+console.log(error)
     });
   document.getElementById("p_fbReadRec").innerHTML= "Record Read"
+  }
+
+  function fb_ReadAll() {
+         const DB = getDatabase()
+      const dbReference= ref(DB, "Test/data/hello");
+    
+
+    get(dbReference).then((snapshot) => {
+
+        var fb_data = snapshot.val();
+
+        if (fb_data != null) {
+
+            //✅ Code for a successful read all goes here
+          console.log("successfully read all")
+        } else {
+
+            //✅ Code for no record found goes here
+      console.log("no record found")
+        }
+
+    }).catch((error) => {
+
+        //❌ Code for a read all error goes here
+            console.log("error")
+    });
+  
   }
   
 /**************************************************************/
