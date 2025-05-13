@@ -45,6 +45,10 @@ import { fb_initialise }
     import { fb_UpdateRec }
     from './fb_io.mjs';
     window.fb_UpdateRec   = fb_UpdateRec;
+
+      import { fb_wreakhavok }
+    from './fb_io.mjs';
+    window.fb_wreakhavok   = fb_wreakhavok;
 /**************************************************************/
 // index.html main code
 /**************************************************************/

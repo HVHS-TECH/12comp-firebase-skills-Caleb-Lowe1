@@ -59,7 +59,8 @@ export {
   fb_WriteRec,
   fb_ReadRec,
   fb_ReadAll,
-  fb_UpdateRec
+  fb_UpdateRec,
+  fb_wreakhavok
 };
 /******************************************************/
 // fb_login()
@@ -260,6 +261,42 @@ console.log(error)
         console.log("failed update")
     });
     document.getElementById("p_fbUpdateRec").innerHTML= "Updated record"
+  }
+
+  function fb_wreakhavok() {
+    console.log("Data gone");
+    const firebaseConfig =     {
+        apiKey: "AIzaSyAQ3Qc6Ej_4YvNXCAjqsfLoA8p75j3R7-8",
+        authDomain: "comp2025-ryan-parks.firebaseapp.com",
+        databaseURL: "https://comp2025-ryan-parks-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "comp2025-ryan-parks",
+        storageBucket: "comp2025-ryan-parks.firebasestorage.app",
+        messagingSenderId: "73072219046",
+        appId: "1:73072219046:web:7608445213a3fd3e973567",
+        measurementId: "G-R89L1J8Z4D"
+    };
+        // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const firebaseGameDB = getDatabase(app);
+    console.info(firebaseGameDB);
+    document.getElementById("p_fbInitialise").innerHTML = "Initialised";
+
+    const DB = getDatabase()
+    const dbReference= ref(DB, "/");
+
+    set(dbReference, {error:"null", error1:"null", error2:"null", error3:"null", error4:"null", error5:"null", error6:"null", error7:"null", error8:"null", error9:"null", error10:"null", error11:"null"}).then(() => {
+
+        //✅ Code for a successful write goes here
+        console.log("success write");
+
+    }).catch((error) => {
+
+        //❌ Code for a write error goes here
+         console.log("fail write");
+         console.log(error);
+
+    });
+
   }
   
 /**************************************************************/
