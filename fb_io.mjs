@@ -43,6 +43,10 @@ import { ref, set }
 
     from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
+    import { query, orderByChild, limitToFirst }
+
+    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
 /**************************************************************/
 // EXPORT FUNCTIONS
 // List all the functions called by code or html outside of this module
@@ -60,7 +64,8 @@ export {
   fb_ReadRec,
   fb_ReadAll,
   fb_UpdateRec,
-  fb_wreakhavok
+  fb_wreakhavok,
+  fb_sortedread
 };
 /******************************************************/
 // fb_login()
@@ -298,6 +303,35 @@ console.log(error)
     });
 
   }
+
+  function fb_sortedread() {  
+    
+    
+    const DB = getDatabase()
+    var sortkey = "hello";
+    const dbReference= query(ref(DB, "Test/data"), orderByChild(sortkey), limitToFirst(2));
+
+    get(dbReference).then((snapshot) => {
+
+        var fb_data = snapshot.val();
+
+      if (fb_data != null) {
+
+           //✅ Code for a successful sorted read goes here
+        console.log("succesfully sorted read")
+        console.log(fb_data)
+        } else {
+
+           //✅ Code for no record found goes here
+        console.log("no record found")
+        }
+
+    }).catch((error) => {
+
+        //❌ Code for a sorted read error goes here
+      console.log("sorted read error")
+      console.log(error)
+    });}
   
 /**************************************************************/
 // END OF CODE
