@@ -176,7 +176,7 @@ PROVIDER.setCustomParameters({
       console.log('%c fb_WriteRec(): ',
         'color: ' + COL_C + '; background-color: ' + COL_B + ';');
         const DB = getDatabase()
-        const dbReference = ref(DB, "Test/data");
+        const dbReference = ref(DB, "Test/UserData1");
 
         set(dbReference, {hello: 'hi', test: 'testing'}).then(() => {
     
@@ -194,7 +194,7 @@ PROVIDER.setCustomParameters({
       console.log('%c fb_ReadRec(): ',
         'color: ' + COL_C + '; background-color: ' + COL_B + ';');
       const DB = getDatabase()
-      const dbReference= ref(DB, "Test/data/hello");
+      const dbReference= ref(DB, "Test/UserData1/hello");
 
     get(dbReference).then((snapshot) => {
 
@@ -224,7 +224,7 @@ console.log(error)
     console.log('%c fb_ReadAll(): ',
         'color: ' + COL_C + '; background-color: ' + COL_B + ';');
          const DB = getDatabase()
-      const dbReference= ref(DB, "Test/data/");
+      const dbReference= ref(DB, "Test/UserData1/");
     
 
     get(dbReference).then((snapshot) => {
@@ -254,7 +254,7 @@ console.log(error)
     console.log('%c fb_UpdateRec(): ',
         'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
-    const dbReference= ref(DB, "Test/data");
+    const dbReference= ref(DB, "Test/UserData1");
 
     update(dbReference, {hello: "hello", test: "test"}).then(() => {
 
@@ -309,7 +309,7 @@ console.log(error)
     
     const DB = getDatabase()
     var sortkey = "hello";
-    const dbReference= query(ref(DB, "Test/data"), orderByChild(sortkey), limitToFirst(2));
+    const dbReference= query(ref(DB, "Test/UserData1"), orderByChild(sortkey), limitToFirst(2));
 
     get(dbReference).then((snapshot) => {
 
