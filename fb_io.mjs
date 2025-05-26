@@ -21,31 +21,31 @@ import { initializeApp }
   from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getDatabase }
   from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
-  import { getAuth, GoogleAuthProvider, signInWithPopup }
+import { getAuth, GoogleAuthProvider, signInWithPopup }
   from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-  import { onAuthStateChanged }
+import { onAuthStateChanged }
 
-from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+  from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
 import { signOut }
 
-from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+  from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
 import { ref, set }
 
-    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+  from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
-    import { get }
+import { get }
 
-    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+  from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
-    import { update }
+import { update }
 
-    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+  from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
-    import { query, orderByChild, limitToFirst }
+import { query, orderByChild, limitToFirst }
 
-    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+  from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
 /**************************************************************/
 // EXPORT FUNCTIONS
@@ -93,246 +93,253 @@ function fb_initialise() {
   console.info(firebaseGameDB);
   document.getElementById("p_fbInitialise").innerHTML = "Button Clicked";
 }
-
-function fb_authenticate() {console.log('%c fb_authenticate(): ',
-  'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+var currentUser = null;
+var userId = null;
+function fb_authenticate() {
+  console.log('%c fb_authenticate(): ',
+    'color: ' + COL_C + '; background-color: ' + COL_B + ';');
   const AUTH = getAuth();
 
-  
 
 
 
-    const PROVIDER = new GoogleAuthProvider();
 
-    // The following makes Google ask the user to select the account
+  const PROVIDER = new GoogleAuthProvider();
 
-PROVIDER.setCustomParameters({
+  // The following makes Google ask the user to select the account
 
-        prompt: 'select_account'
+  PROVIDER.setCustomParameters({
 
-    });
+    prompt: 'select_account'
 
-    signInWithPopup(AUTH, PROVIDER).then((result) => {
+  });
 
-        //✅ Code for a successful authentication goes here
-        console.log("successful authentication")
-        
-    })
+  signInWithPopup(AUTH, PROVIDER).then((result) => {
+
+    //✅ Code for a successful authentication goes here
+    console.log("successful authentication")
+    currentUser = result.user;
+    userId = currentUser.uid;
+  })
 
     .catch((error) => {
 
-        //❌ Code for an authentication error goes here
-        console.log("authentication error")
+      //❌ Code for an authentication error goes here
+      console.log("authentication error")
     });
-    document.getElementById("p_fbAuthenticate").innerHTML= "Authentication success"};
+  document.getElementById("p_fbAuthenticate").innerHTML = "Authentication success"
+};
 
-    function fb_detectloginchange() {
-      console.log('%c fb_loginchangedetected(): ',
-        'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-        const AUTH = getAuth();
-      onAuthStateChanged(AUTH, (user) => {
+function fb_detectloginchange() {
+  console.log('%c fb_loginchangedetected(): ',
+    'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+  const AUTH = getAuth();
+  onAuthStateChanged(AUTH, (user) => {
 
-        if (user) {
-  
-            //✅ Code for user logged in goes here
-          console.log("user login successful")
-        } else {
-  
-            //✅ Code for user logged out goes here
-            console.log("user log out successful")
-        }
-  
-    }, (error) => {
-  
-        //❌ Code for an onAuthStateChanged error goes here
-        console.log("onAuthStateChanged error")
-    });
-    
-    document.getElementById("p_fbdetectloginchange").innerHTML= "Login change detected"
-    };
+    if (user) {
 
-    function fb_logout() {
-      console.log('%c fb_logout(): ',
-        'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-        const AUTH = getAuth();
-      
-        signOut(AUTH).then(() => {
+      //✅ Code for user logged in goes here
+      console.log("user login successful")
+    } else {
 
-          //✅ Code for a successful logout goes here
-  console.log("successful logout")
-      })
-  
-      .catch((error) => {
-  
-          //❌ Code for a logout error goes here
-          console.log("logout error")
-      });
-      document.getElementById("p_fblogout").innerHTML= "logout"
-    };
-
-
-    //function fb_WriteRec incomplete
-    function fb_WriteRec() {
-      console.log('%c fb_WriteRec(): ',
-        'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-        const DB = getDatabase()
-        const dbReference = ref(DB, "Test/UserData1");
-
-        set(dbReference, {hello: 'hi', test: 'testing'}).then(() => {
-    
-            //✅ Code for a successful write goes here
-    console.log("successful write")
-        }).catch((error) => {
-    
-            //❌ Code for a write error goes here
-    console.log("Writing error")
-        });
-          document.getElementById("p_fbWriteRec").innerHTML= "Record written"
+      //✅ Code for user logged out goes here
+      console.log("user log out successful")
     }
 
-     function fb_ReadRec() {
-      console.log('%c fb_ReadRec(): ',
-        'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-      const DB = getDatabase()
-      const dbReference= ref(DB, "Test/UserData1/hello");
+  }, (error) => {
 
-    get(dbReference).then((snapshot) => {
+    //❌ Code for an onAuthStateChanged error goes here
+    console.log("onAuthStateChanged error")
+  });
 
-        var fb_data = snapshot.val();
+  document.getElementById("p_fbdetectloginchange").innerHTML = "Login change detected"
+};
 
-        if (fb_data != null) {
+function fb_logout() {
+  console.log('%c fb_logout(): ',
+    'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+  const AUTH = getAuth();
 
-            //✅ Code for a successful read goes here
-console.log("successful read")
-console.log(fb_data)
-        } else {
+  signOut(AUTH).then(() => {
 
-            //✅ Code for no record found goes here
-console.log("no record found")
-        }
+    //✅ Code for a successful logout goes here
+    console.log("successful logout")
+  })
 
-    }).catch((error) => {
+    .catch((error) => {
 
-        //❌ Code for a read error goes here
-console.log("read error")
-console.log(error)
+      //❌ Code for a logout error goes here
+      console.log("logout error")
     });
-  document.getElementById("p_fbReadRec").innerHTML= "Record Read"
-  }
+  document.getElementById("p_fblogout").innerHTML = "logout"
+};
 
-  function fb_ReadAll() {
-    console.log('%c fb_ReadAll(): ',
-        'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-         const DB = getDatabase()
-      const dbReference= ref(DB, "Test/UserData1/");
-    
 
-    get(dbReference).then((snapshot) => {
+//function fb_WriteRec incomplete
+function fb_WriteRec() {
+  console.log('%c fb_WriteRec(): ',
+    'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+  const DB = getDatabase()
+  const dbReference = ref(DB, "Test/UID" + userId);
 
-        var fb_data = snapshot.val();
+  var name = document.getElementById("name").value;
+  var favoriteFruit = document.getElementById("favoriteFruit").value;
+  var fruitQuantity = document.getElementById("fruitQuantity").value;
+  set(dbReference, { Name: name, FavoriteFruit: favoriteFruit, FruitQuantity: fruitQuantity }).then(() => {
 
-        if (fb_data != null) {
+    //✅ Code for a successful write goes here
+    console.log("successful write")
+  }).catch((error) => {
 
-            //✅ Code for a successful read all goes here
-          console.log("successfully read all")
-          console.log(fb_data)
-        } else {
+    //❌ Code for a write error goes here
+    console.log("Writing error")
+  });
+}
 
-            //✅ Code for no record found goes here
+function fb_ReadRec() {
+  console.log('%c fb_ReadRec(): ',
+    'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+  const DB = getDatabase()
+  const dbReference = ref(DB, "Test/UID/Score");
+
+  get(dbReference).then((snapshot) => {
+
+    var fb_data = snapshot.val();
+
+    if (fb_data != null) {
+
+      //✅ Code for a successful read goes here
+      console.log("successful read")
+      console.log(fb_data)
+    } else {
+
+      //✅ Code for no record found goes here
       console.log("no record found")
-        }
+    }
 
-    }).catch((error) => {
+  }).catch((error) => {
 
-        //❌ Code for a read all error goes here
-            console.log("error")
-    });
-   document.getElementById("p_fbReadAll").innerHTML= "Read all"
-  }
+    //❌ Code for a read error goes here
+    console.log("read error")
+    console.log(error)
+  });
+  document.getElementById("p_fbReadRec").innerHTML = "Record Read"
+}
 
-  function fb_UpdateRec() { 
-    console.log('%c fb_UpdateRec(): ',
-        'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-    const DB = getDatabase()
-    const dbReference= ref(DB, "Test/UserData1");
+function fb_ReadAll() {
+  console.log('%c fb_ReadAll(): ',
+    'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+  const DB = getDatabase()
+  const dbReference = ref(DB, "Test/UID/");
 
-    update(dbReference, {hello: "hello", test: "test"}).then(() => {
 
-        //✅ Code for a successful update goes here
-        console.log("successful update")
-    }).catch((error) => {
+  get(dbReference).then((snapshot) => {
 
-        //❌ Code for a update error goes here
-        console.log("failed update")
-    });
-    document.getElementById("p_fbUpdateRec").innerHTML= "Updated record"
-  }
+    var fb_data = snapshot.val();
 
-  function fb_wreakhavok() {
-    console.log("Data gone");
-    const firebaseConfig =     {
-        apiKey: "AIzaSyAQ3Qc6Ej_4YvNXCAjqsfLoA8p75j3R7-8",
-        authDomain: "comp2025-ryan-parks.firebaseapp.com",
-        databaseURL: "https://comp2025-ryan-parks-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "comp2025-ryan-parks",
-        storageBucket: "comp2025-ryan-parks.firebasestorage.app",
-        messagingSenderId: "73072219046",
-        appId: "1:73072219046:web:7608445213a3fd3e973567",
-        measurementId: "G-R89L1J8Z4D"
-    };
-        // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const firebaseGameDB = getDatabase(app);
-    console.info(firebaseGameDB);
-    document.getElementById("p_fbInitialise").innerHTML = "Initialised";
+    if (fb_data != null) {
 
-    const DB = getDatabase()
-    const dbReference= ref(DB, "/");
+      //✅ Code for a successful read all goes here
+      console.log("successfully read all")
+      console.log(fb_data)
+    } else {
 
-    set(dbReference, {error:"null", error1:"null", error2:"null", error3:"null", error4:"null", error5:"null", error6:"null", error7:"null", error8:"null", error9:"null", error10:"null", error11:"null"}).then(() => {
+      //✅ Code for no record found goes here
+      console.log("no record found")
+    }
 
-        //✅ Code for a successful write goes here
-        console.log("success write");
+  }).catch((error) => {
 
-    }).catch((error) => {
+    //❌ Code for a read all error goes here
+    console.log("error")
+  });
+  document.getElementById("p_fbReadAll").innerHTML = "Read all"
+}
 
-        //❌ Code for a write error goes here
-         console.log("fail write");
-         console.log(error);
+function fb_UpdateRec() {
+  console.log('%c fb_UpdateRec(): ',
+    'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+  const DB = getDatabase()
+  const dbReference = ref(DB, "Test/UID");
 
-    });
+  update(dbReference, { Score: "2", Highscore: "5" }).then(() => {
 
-  }
+    //✅ Code for a successful update goes here
+    console.log("successful update")
+  }).catch((error) => {
 
-  function fb_sortedread() {  
-    
-    
-    const DB = getDatabase()
-    var sortkey = "hello";
-    const dbReference= query(ref(DB, "Test/UserData1"), orderByChild(sortkey), limitToFirst(2));
+    //❌ Code for a update error goes here
+    console.log("failed update")
+  });
+  document.getElementById("p_fbUpdateRec").innerHTML = "Updated record"
+}
 
-    get(dbReference).then((snapshot) => {
+function fb_wreakhavok() {
+  console.log("Data gone");
+  const firebaseConfig = {
+    apiKey: "AIzaSyAQ3Qc6Ej_4YvNXCAjqsfLoA8p75j3R7-8",
+    authDomain: "comp2025-ryan-parks.firebaseapp.com",
+    databaseURL: "https://comp2025-ryan-parks-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "comp2025-ryan-parks",
+    storageBucket: "comp2025-ryan-parks.firebasestorage.app",
+    messagingSenderId: "73072219046",
+    appId: "1:73072219046:web:7608445213a3fd3e973567",
+    measurementId: "G-R89L1J8Z4D"
+  };
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const firebaseGameDB = getDatabase(app);
+  console.info(firebaseGameDB);
+  document.getElementById("p_fbInitialise").innerHTML = "Initialised";
 
-        var fb_data = snapshot.val();
+  const DB = getDatabase()
+  const dbReference = ref(DB, "/");
 
-      if (fb_data != null) {
+  set(dbReference, { error: "null", error1: "null", error2: "null", error3: "null", error4: "null", error5: "null", error6: "null", error7: "null", error8: "null", error9: "null", error10: "null", error11: "null" }).then(() => {
 
-           //✅ Code for a successful sorted read goes here
-        console.log("succesfully sorted read")
-        console.log(fb_data)
-        } else {
+    //✅ Code for a successful write goes here
+    console.log("success write");
 
-           //✅ Code for no record found goes here
-        console.log("no record found")
-        }
+  }).catch((error) => {
 
-    }).catch((error) => {
+    //❌ Code for a write error goes here
+    console.log("fail write");
+    console.log(error);
 
-        //❌ Code for a sorted read error goes here
-      console.log("sorted read error")
-      console.log(error)
-    });}
-  
+  });
+
+}
+
+function fb_sortedread() {
+
+
+  const DB = getDatabase()
+  var sortkey = "Score";
+  const dbReference = query(ref(DB, "Test/UID"), orderByChild(sortkey), limitToFirst(2));
+
+  get(dbReference).then((snapshot) => {
+
+    var fb_data = snapshot.val();
+
+    if (fb_data != null) {
+
+      //✅ Code for a successful sorted read goes here
+      console.log("succesfully sorted read")
+      console.log(fb_data)
+    } else {
+
+      //✅ Code for no record found goes here
+      console.log("no record found")
+    }
+
+  }).catch((error) => {
+
+    //❌ Code for a sorted read error goes here
+    console.log("sorted read error")
+    console.log(error)
+  });
+}
+
 /**************************************************************/
 // END OF CODE
 /**************************************************************/

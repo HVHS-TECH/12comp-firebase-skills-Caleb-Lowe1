@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>12COMP firebase</title>
     <meta charset="UTF-8">
@@ -16,6 +17,7 @@
 <!--*************************************************************
   BODY
 **************************************************************-->
+
 <body>
     <header class="container">
         <h1>12COMP Firebase Realtime Database Skills</h1>
@@ -48,6 +50,8 @@
         </div>
     </section>
 
+    
+
     <!--***********************************************************
         firebase status
     ************************************************************-->
@@ -74,10 +78,23 @@
         </div>
     </footer>
 
+    <div class = container>
+    <form id="fruitForm">
+      <label for="name">Your Name:</label>
+      <input type="text" id="name" name="name" required />
 
+      <label for="favoriteFruit">Favorite Fruit:</label>
+      <input type="text" id="favoriteFruit" name="favoriteFruit" required />
+
+      <label for="fruitQuantity">How many servings per week?</label>
+      <input type="number" id="fruitQuantity" name="fruitQuantity" required />
+    </form>
+    <button onclick="fb_WriteRec()">Submit</button>
+    </div>
     <!-- Your JS files & main module ***************************-->
     <script type="module" src="./main.mjs"></script>
 </body>
+
 </html>
 <!--*************************************************************
   END OF INDEX.HTML
