@@ -180,7 +180,7 @@ function fb_WriteRec() {
   console.log('%c fb_WriteRec(): ',
     'color: ' + COL_C + '; background-color: ' + COL_B + ';');
   const DB = getDatabase()
-  const dbReference = ref(DB, "Test/UID" + userId);
+  const dbReference = ref(DB, "Test/UID/" + userId);
 
   var name = document.getElementById("name").value;
   var favoriteFruit = document.getElementById("favoriteFruit").value;
@@ -315,7 +315,7 @@ function fb_sortedread() {
 
   const DB = getDatabase()
   var sortkey = "Score";
-  const dbReference = query(ref(DB, "Test/UID"), orderByChild(sortkey), limitToFirst(2));
+  const dbReference = query(ref(DB, "Test/UID/" + userId), orderByChild(sortkey), limitToFirst(3));
 
   get(dbReference).then((snapshot) => {
 
